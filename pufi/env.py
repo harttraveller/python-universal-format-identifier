@@ -1,4 +1,5 @@
 FORMATS = {
+    "unknown",
     "txt",
 }
 
