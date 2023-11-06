@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import Optional, Union
 
+from pufi.env import DataFormat
+
 
 def resolve(
     text: Optional[str] = None,
@@ -8,7 +10,7 @@ def resolve(
     path: Optional[Union[str, Path]] = None,
     uri: Optional[str] = None,
     check: bool = False,
-):
+) -> DataFormat:
     if check:
         raise NotImplementedError(
             "Reading in the resource to check it is not yet supported, "
