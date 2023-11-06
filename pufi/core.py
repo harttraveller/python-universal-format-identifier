@@ -1,7 +1,29 @@
 from pathlib import Path
 from typing import Optional, Union
+from pydantic import BaseModel
 
 from pufi.env import DataFormat
+
+
+class ResolutionResult(BaseModel):
+    success: bool
+    dformat: DataFormat
+
+
+def resolve_via_loc(loc: Union[str, Path]) -> ResolutionResult:
+    pass
+
+
+def resolve_via_uri(uri: str) -> ResolutionResult:
+    pass
+
+
+def resolve_via_raw(raw: str) -> ResolutionResult:
+    pass
+
+
+def resolve_via_bin(bin: bytes) -> ResolutionResult:
+    pass
 
 
 def resolve(
@@ -20,3 +42,24 @@ def resolve(
     if all([raw is None, bin is None, loc is None, uri is None]):
         raise ValueError("You must pass an argument to at least one of the parameters.")
     # assess if the path or uri
+    # todo: if val, run all, compare results
+    if loc is not None:
+        loc_resolution_attempt = resolve_via_loc(loc=loc)
+        if loc_resolution_attempt.success:
+            # todo: if val, doublecheck by reading in
+            return loc_resolution_attempt.dformat
+    if uri is not None:
+        uri_resolution_attempt = resolve_via_uri(uri=uri)
+        if uri_resolution_attempt.success:
+            # todo: if val, doublecheck by retrieving from web
+            return uri_resolution_attempt.dformat
+    if raw is not None:
+        raw_resolution_attempt = resolve_via_raw(raw=raw)
+        if raw_resolution_attempt.success:
+            return raw_resolution_attempt.dformat
+    if bin is not None:
+        bin_resolution_attempt = resolve_via_bin(bin=bin)
+        if bin_resolution_attempt.success:
+            return bin_resolution_attempt.dformat
+    # todo: check to make sure there are no dataformats called 'unknown'
+    return "unknown"
