@@ -40,6 +40,7 @@ def resolve_via_loc(loc: Union[str, Path], val: bool) -> ResolutionResult:
 
 
 def resolve_via_uri(uri: str) -> ResolutionResult:
+    # check if actually uri
     pass
 
 
