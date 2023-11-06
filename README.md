@@ -16,14 +16,6 @@
 from pufi import resolve
 ```
 
-## Formats
-
-## Tasks
-
-### Backlog
-
-- [ ] compare python vs. maturin/rust python accelerated speed
-
 <!--
 ## Requirements
 
