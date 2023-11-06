@@ -25,8 +25,18 @@ class ResolutionResult(BaseModel):
     dformat: DataFormat
 
 
-def resolve_via_loc(loc: Union[str, Path]) -> ResolutionResult:
-    pass
+def resolve_via_loc(loc: Union[str, Path], val: bool) -> ResolutionResult:
+    if "." in loc:
+        extension = loc.split(".")[-1].lower()
+        if extension in FORMATS:
+            return ResolutionResult(success=True, dformat=DataFormat(name=extension))
+        else:
+            return ResolutionResult(success=False, dformat="unknown")
+    else:
+        raise NotImplementedError(
+            "Could not resolve from file extension, would need to read in file "
+            "to resolve from binary, but this feature is currently unimplemented."
+        )
 
 
 def resolve_via_uri(uri: str) -> ResolutionResult:
@@ -59,7 +69,7 @@ def resolve(
     # assess if the path or uri
     # todo: if val, run all, compare results
     if loc is not None:
-        loc_resolution_attempt = resolve_via_loc(loc=loc)
+        loc_resolution_attempt = resolve_via_loc(loc=loc, val=val)
         if loc_resolution_attempt.success:
             # todo: if val, doublecheck by reading in
             return loc_resolution_attempt.dformat
