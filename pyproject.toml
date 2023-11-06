@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "python-universal-format-identifier"
+packages = [{ include = "pufi" }]
+version = "0.1.0"
+description = "A universal format identifier for various file formats"
+readme = "README.md"
+repository = "https://github.com/harttraveller/pufi"
+documentation = "https://harttraveller.com/pufi"
+authors = ["Hart Traveller <ruling_fiction.0b@icloud.com>"]
+maintainers = ["Hart Traveller <ruling_fiction.0b@icloud.com>"]
+
+[tool.poetry.dependencies]
+python = ">3.9.7, <4.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# [tool.poetry.scripts]
+# pufi = "pufi.cli:entry"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
