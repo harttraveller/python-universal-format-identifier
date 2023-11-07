@@ -1,17 +1,22 @@
 # Tasks
 
+# Active
+
+- [ ] finish basic format intepreter covering formats from: https://github.com/dyne/file-extension-list
+
+
+# Priority
+
+- [ ] identify the file formats I need to be able to identify right now
+
+## Backlog
+
 - [ ] get list of all file formats
     - https://www.wikiwand.com/en/List_of_filename_extensions
     - https://www.wikiwand.com/en/List_of_file_formats
     - https://github.com/dyne/file-extension-list
     - https://gist.github.com/securifera/e7eed730cbe1ce43d0c29d7cd2d582f4
     - * noticed ics missing incidentally while scrolling, ie: lists prolly aren't complete
-- [ ] identify the file formats I need to be able to identify right now
-
-
-
-## Backlog
-
 - [ ] identify the file formats that are the most common
 - [ ] analyze/test the coverage level by unique file ids and proportional format distribution
     - [ ] add version coverage graphs to docs
