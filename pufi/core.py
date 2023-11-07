@@ -51,19 +51,13 @@ def resolve_via_loc(loc: Union[str, Path], val: bool) -> ResolutionResult:
         )
 
 
-def resolve_via_raw(raw: str) -> ResolutionResult:
-    pass
-
-
-def resolve_via_bin(bin: bytes) -> ResolutionResult:
+def resolve_via_raw(raw: Union[str, bytes]) -> ResolutionResult:
     pass
 
 
 def resolve(
-    raw: Optional[str] = None,
-    bin: Optional[bytes] = None,
+    raw: Optional[Union[str, bytes]] = None,
     loc: Optional[Union[str, Path]] = None,
-    uri: Optional[str] = None,
     val: bool = False,
 ) -> DataFormat:
     """
@@ -76,7 +70,7 @@ def resolve(
             "you should read it in and pass the text or binary data to this function."
         )
     # check if appropriate params have been passed in
-    if all([raw is None, bin is None, loc is None, uri is None]):
+    if all([raw is None, loc is None]):
         raise ValueError("You must pass an argument to at least one of the parameters.")
     # assess if the path or uri
     # todo: if val, run all, compare results
@@ -89,9 +83,5 @@ def resolve(
         raw_resolution_attempt = resolve_via_raw(raw=raw)
         if raw_resolution_attempt.success:
             return raw_resolution_attempt.dformat
-    if bin is not None:
-        bin_resolution_attempt = resolve_via_bin(bin=bin)
-        if bin_resolution_attempt.success:
-            return bin_resolution_attempt.dformat
     # todo: check to make sure there are no dataformats called 'unknown'
     return "unknown"
