@@ -21,3 +21,11 @@ if not CATEGORIES_LOCAL.exists():
     urlretrieve(CATEGORIES_URL, CATEGORIES_LOCAL)
 if not EXTENSIONS_LOCAL.exists():
     urlretrieve(EXTENSIONS_URL, EXTENSIONS_LOCAL)
+
+with open(CATEGORIES_LOCAL) as categories_file:
+    CATEGORIES = json.loads(categories_file.read())
+categories_file.close()
+
+with open(EXTENSIONS_LOCAL) as extensions_file:
+    EXTENSIONS = json.loads(extensions_file.read())
+extensions_file.close()
