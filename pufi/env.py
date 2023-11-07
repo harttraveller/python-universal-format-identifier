@@ -2,8 +2,7 @@ from pathlib import Path
 from urllib.request import urlretrieve
 
 
-HOME = Path.home()
-CACHE = HOME / ".pufi"
+CACHE = Path.home() / ".pufi"
 
 CATEGORIES_LOCAL = CACHE / "categories.json"
 EXTENSIONS_LOCAL = CACHE / "extensions.json"
