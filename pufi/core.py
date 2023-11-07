@@ -58,24 +58,24 @@ def resolve_via_bin(bin: bytes) -> ResolutionResult:
 
 
 def resolve(
-    raw: Optional[str] = None,
+    text: Optional[str] = None,
     bin: Optional[bytes] = None,
-    loc: Optional[Union[str, Path]] = None,
+    path: Optional[Union[str, Path]] = None,
     uri: Optional[str] = None,
-    val: bool = False,
+    check: bool = False,
 ) -> DataFormat:
-    if val:
+    if check:
         raise NotImplementedError(
             "Reading in the resource to check it is not yet supported, "
             "you should read it in and pass the text or binary data to this function."
         )
     # check if appropriate params have been passed in
-    if all([raw is None, bin is None, loc is None, uri is None]):
+    if all([text is None, bin is None, path is None, uri is None]):
         raise ValueError("You must pass an argument to at least one of the parameters.")
     # assess if the path or uri
     # todo: if val, run all, compare results
-    if loc is not None:
-        loc_resolution_attempt = resolve_via_loc(loc=loc, val=val)
+    if path is not None:
+        loc_resolution_attempt = resolve_via_loc(loc=path, val=check)
         if loc_resolution_attempt.success:
             # todo: if val, doublecheck by reading in
             return loc_resolution_attempt.dformat
@@ -84,8 +84,8 @@ def resolve(
         if uri_resolution_attempt.success:
             # todo: if val, doublecheck by retrieving from web
             return uri_resolution_attempt.dformat
-    if raw is not None:
-        raw_resolution_attempt = resolve_via_raw(raw=raw)
+    if text is not None:
+        raw_resolution_attempt = resolve_via_raw(raw=text)
         if raw_resolution_attempt.success:
             return raw_resolution_attempt.dformat
     if bin is not None:
