@@ -31,10 +31,10 @@ class Resolver:
         pass
 
 
-def resolve_via_path(path: Union[str, Path], val: bool) -> ResolutionResult:
-    path = str(path)
-    if "." in path:
-        extension = path.split(".")[-1].lower()
+def resolve_via_loc(loc: Union[str, Path], val: bool) -> ResolutionResult:
+    loc = str(loc)
+    if "." in loc:
+        extension = loc.split(".")[-1].lower()
         if extension in extset:
             return ResolutionResult(success=True, dformat=DataFormat(extension=extension))
         else:
@@ -42,18 +42,16 @@ def resolve_via_path(path: Union[str, Path], val: bool) -> ResolutionResult:
                 success=False, dformat=DataFormat(extension="unknown")
             )
     else:
+        # todo: if val, load
+        # todo: if url/uri, doublecheck by retrieving from web
+        # todo: if path, doublecheck by loading in
         raise NotImplementedError(
             "Could not resolve from file extension, would need to read in file "
             "to resolve from binary, but this feature is currently unimplemented."
         )
 
 
-def resolve_via_uri(uri: str) -> ResolutionResult:
-    # check if actually uri
-    pass
-
-
-def resolve_via_text(text: str) -> ResolutionResult:
+def resolve_via_raw(raw: str) -> ResolutionResult:
     pass
 
 
@@ -62,34 +60,33 @@ def resolve_via_bin(bin: bytes) -> ResolutionResult:
 
 
 def resolve(
-    text: Optional[str] = None,
+    raw: Optional[str] = None,
     bin: Optional[bytes] = None,
-    path: Optional[Union[str, Path]] = None,
+    loc: Optional[Union[str, Path]] = None,
     uri: Optional[str] = None,
-    check: bool = False,
+    val: bool = False,
 ) -> DataFormat:
-    if check:
+    """
+    raw: text
+    loc: path (str/Path) or uri/url to resource
+    """
+    if val:
         raise NotImplementedError(
             "Reading in the resource to check it is not yet supported, "
             "you should read it in and pass the text or binary data to this function."
         )
     # check if appropriate params have been passed in
-    if all([text is None, bin is None, path is None, uri is None]):
+    if all([raw is None, bin is None, loc is None, uri is None]):
         raise ValueError("You must pass an argument to at least one of the parameters.")
     # assess if the path or uri
     # todo: if val, run all, compare results
-    if path is not None:
-        loc_resolution_attempt = resolve_via_path(path=path, val=check)
+    if loc is not None:
+        loc_resolution_attempt = resolve_via_loc(loc=loc, val=val)
         if loc_resolution_attempt.success:
             # todo: if val, doublecheck by reading in
             return loc_resolution_attempt.dformat
-    if uri is not None:
-        uri_resolution_attempt = resolve_via_uri(uri=uri)
-        if uri_resolution_attempt.success:
-            # todo: if val, doublecheck by retrieving from web
-            return uri_resolution_attempt.dformat
-    if text is not None:
-        raw_resolution_attempt = resolve_via_text(text=text)
+    if raw is not None:
+        raw_resolution_attempt = resolve_via_raw(raw=raw)
         if raw_resolution_attempt.success:
             return raw_resolution_attempt.dformat
     if bin is not None:
