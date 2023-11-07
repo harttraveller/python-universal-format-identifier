@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
-from loguru import logger
-from urllib.request import urlretrieve
+from loguru import logger as log
+from urllib.request import urlretrieve as download
 
 
 PUFI_CACHE = Path.home() / ".pufi"
@@ -20,9 +20,9 @@ EXTENSIONS_URL = (
 if not PUFI_CACHE.exists():
     PUFI_CACHE.mkdir()
 if not CATEGORIES_LOCAL.exists():
-    urlretrieve(CATEGORIES_URL, CATEGORIES_LOCAL)
+    download(CATEGORIES_URL, CATEGORIES_LOCAL)
 if not EXTENSIONS_LOCAL.exists():
-    urlretrieve(EXTENSIONS_URL, EXTENSIONS_LOCAL)
+    download(EXTENSIONS_URL, EXTENSIONS_LOCAL)
 
 with open(CATEGORIES_LOCAL) as categories_file:
     CATEGORIES = cats = json.loads(categories_file.read())
