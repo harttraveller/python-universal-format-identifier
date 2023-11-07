@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional, Union
 from pydantic import BaseModel, field_validator
-from pufi.object import ResolutionResult, DataFormat
+from pufi.schema import ResolutionResult, DataFormat
 from pufi.env import cats, exts
 
 
