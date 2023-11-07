@@ -12,6 +12,7 @@ maintainers = ["Hart Traveller <ruling_fiction.0b@icloud.com>"]
 [tool.poetry.dependencies]
 python = ">3.9.7, <4.0"
 pydantic = "^2.4.2"
+loguru = "^0.7.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.3"
