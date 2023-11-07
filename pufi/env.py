@@ -30,9 +30,9 @@ if not CATEGORIES_LOCAL.exists():
     try:
         download(CATEGORIES_URL, CATEGORIES_LOCAL)
         log.info(f"Downloaded {CATEGORIES_URL} to {str(CATEGORIES_LOCAL)}")
-    except:
+    except Exception as exc:
         # todo: raise exception if no network connectivity
-        pass
+        raise exc
 
 # * ensure extensions data cached and download if not
 if not EXTENSIONS_LOCAL.exists():
@@ -40,9 +40,9 @@ if not EXTENSIONS_LOCAL.exists():
     try:
         download(EXTENSIONS_URL, EXTENSIONS_LOCAL)
         log.info(f"Downloaded {EXTENSIONS_URL} to {str(EXTENSIONS_LOCAL)}")
-    except:
+    except Exception as exc:
         # todo: raise exception if no network connectivity
-        pass
+        raise exc
 
 # * load categories data
 with open(CATEGORIES_LOCAL) as categories_file:
