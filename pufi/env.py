@@ -18,11 +18,13 @@ EXTENSIONS_URL = (
     "https://github.com/dyne/file-extension-list/raw/master/pub/extensions.json"
 )
 
-# ensure that package resource files are available
+# * ensure that cache dir exists and create if not
 if not PUFI_CACHE.exists():
     log.warning(f"A {str(PUFI_CACHE)} directory is needed to cache package data in")
     PUFI_CACHE.mkdir()
     log.info(f"Created {str(PUFI_CACHE)} cache directory")
+
+# * ensure categories data cached and download if not
 if not CATEGORIES_LOCAL.exists():
     log.warning(f"Could not find {str(CATEGORIES_LOCAL)} file")
     try:
@@ -30,6 +32,8 @@ if not CATEGORIES_LOCAL.exists():
         log.info(f"Downloaded {str(CATEGORIES_LOCAL)} from {CATEGORIES_URL}")
     except:
         pass
+
+# * ensure extensions data cached and download if not
 if not EXTENSIONS_LOCAL.exists():
     log.warning(f"Could not find {str(EXTENSIONS_LOCAL)} file")
     try:
@@ -38,10 +42,12 @@ if not EXTENSIONS_LOCAL.exists():
     except:
         pass
 
+# * load categories data
 with open(CATEGORIES_LOCAL) as categories_file:
     CATEGORIES = cats = json.loads(categories_file.read())
 categories_file.close()
 
+# * load extensions data
 with open(EXTENSIONS_LOCAL) as extensions_file:
     EXTENSIONS = exts = json.loads(extensions_file.read())
 extensions_file.close()
