@@ -1,1 +1,1 @@
-from pufi.core import resolve
+from urllib.request import urlretrieve
