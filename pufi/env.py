@@ -15,6 +15,7 @@ EXTENSIONS_URL = (
 )
 
 # ensure that package resource files are available
+# todo: add logging messages
 if not PUFI_CACHE.exists():
     PUFI_CACHE.mkdir()
 if not CATEGORIES_LOCAL.exists():
