@@ -76,17 +76,17 @@ cache_file(path=EXTENSIONS_LOCAL, source=EXTENSIONS_URL, backup=EXTENSIONS_URL_B
 
 # * load categories data
 with open(CATEGORIES_LOCAL) as categories_file:
-    CATEGORIES = json.loads(categories_file.read())
+    CATEGORIES = cats = json.loads(categories_file.read())
 categories_file.close()
 
 # * load extensions data
 with open(EXTENSIONS_LOCAL) as extensions_file:
-    EXTENSIONS = json.loads(extensions_file.read())
+    EXTENSIONS = exts = json.loads(extensions_file.read())
 extensions_file.close()
-for ext in EXTENSIONS.keys():
-    if "." in ext:
-        del EXTENSIONS[ext]
-exts = EXTENSIONS
+# for ext in EXTENSIONS.keys():
+#     if "." in ext:
+#         del EXTENSIONS[ext]
+# exts = EXTENSIONS
 
 # * get extensions set
 EXTENSIONS_SET = extset = set(exts.keys())
