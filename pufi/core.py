@@ -53,6 +53,7 @@ class Resolve:
     def bin(bin: bytes) -> ResolutionResult:
         pass
 
+    @staticmethod
     def run(
         raw: Optional[str] = None,
         bin: Optional[bytes] = None,
