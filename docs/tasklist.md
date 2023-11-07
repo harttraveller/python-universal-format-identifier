@@ -3,6 +3,7 @@
 - [ ] get list of all file formats
     - https://www.wikiwand.com/en/List_of_filename_extensions
     - https://www.wikiwand.com/en/List_of_file_formats
+    - https://github.com/dyne/file-extension-list
     - * noticed ics missing incidentally while scrolling, ie: lists prolly aren't complete
 - [ ] identify the file formats I need to be able to identify right now
 
