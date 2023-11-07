@@ -7,9 +7,11 @@ from pufi.variable import (
     EXTENSIONS_URL,
 )
 
-if not CACHE.exists():
-    CACHE.mkdir()
-if not CATEGORIES_LOCAL.exists():
-    urlretrieve(CATEGORIES_URL, CATEGORIES_LOCAL)
-if not EXTENSIONS_LOCAL.exists():
-    urlretrieve(EXTENSIONS_URL, EXTENSIONS_LOCAL)
+
+def init_package_resources():
+    if not CACHE.exists():
+        CACHE.mkdir()
+    if not CATEGORIES_LOCAL.exists():
+        urlretrieve(CATEGORIES_URL, CATEGORIES_LOCAL)
+    if not EXTENSIONS_LOCAL.exists():
+        urlretrieve(EXTENSIONS_URL, EXTENSIONS_LOCAL)
