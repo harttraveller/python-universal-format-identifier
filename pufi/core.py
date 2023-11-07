@@ -1,23 +1,23 @@
 from pathlib import Path
 from typing import Optional, Union
 from pydantic import BaseModel, field_validator
-from pufi.vars import cats, exts
+from pufi.vars import cats, exts, extset
 
 
 class DataFormat(BaseModel):
-    name: str
+    extension: str
 
-    # @field_validator("name")
-    # def __validate_name(cls, name: str) -> str:
-    #     if name not in FORMATS:
-    #         raise ValueError("unknown file format")
-    #     return name
+    @field_validator("extension")
+    def __validate_name(cls, extension: str) -> str:
+        if extension not in extset:
+            raise ValueError("unknown file format")
+        return extension
 
     def __str__(self) -> str:
-        return self.name
+        return self.extension
 
     def __repr__(self) -> str:
-        return self.name
+        return self.extension
 
 
 class ResolutionResult(BaseModel):
