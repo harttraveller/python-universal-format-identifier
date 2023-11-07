@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 from loguru import logger as log
+from urllib.error import URLError
+from urllib import request
 from urllib.request import urlretrieve as download
 
 # * default cache location
@@ -21,14 +23,33 @@ CATEGORIES_URL_BACKUP = "https://github.com/harttraveller/python-universal-forma
 EXTENSIONS_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/extensions.json"
 
 
-# ! DYNAMIC
+# todo: move to micropkg
+class InternetUnavailableError(Exception):
+    def __init__(self, reason: str) -> None:
+        self.reason = reason
 
+    def __str__(self) -> str:
+        return f"Internet connection required for: {self.reason}"
+
+
+def require_internet(reason: str, check: str = "https://www.google.com"):
+    try:
+        _ = request.urlopen(check)
+    except URLError:
+        raise InternetUnavailableError(reason=reason)
+
+
+# ! DYNAMIC
 
 # * ensure that cache dir exists and create if not
 if not PUFI_CACHE.exists():
     log.warning(f"A {str(PUFI_CACHE)} directory is needed to cache package data in")
     PUFI_CACHE.mkdir()
     log.info(f"Created {str(PUFI_CACHE)} cache directory")
+
+# * check network access
+if (not CATEGORIES_LOCAL.exists()) or (not EXTENSIONS_LOCAL.exists()):
+    require_internet(reason="downloading package resource data")
 
 # * ensure categories data cached and download if not
 if not CATEGORIES_LOCAL.exists():
