@@ -3,11 +3,14 @@ from pathlib import Path
 from loguru import logger as log
 from urllib.request import urlretrieve as download
 
-
+# * default cache location
 PUFI_CACHE = Path.home() / ".pufi"
 
+# * local cached category/extension data
 CATEGORIES_LOCAL = PUFI_CACHE / "categories.json"
 EXTENSIONS_LOCAL = PUFI_CACHE / "extensions.json"
+
+# * category/extension data source
 CATEGORIES_URL = (
     "https://github.com/dyne/file-extension-list/raw/master/pub/categories.json"
 )
