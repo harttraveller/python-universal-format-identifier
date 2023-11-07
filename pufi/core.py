@@ -33,7 +33,7 @@ class Resolver:
 
 def resolve_via_path(path: Union[str, Path], val: bool) -> ResolutionResult:
     if "." in path:
-        extension = path.split(".")[-1].lower()
+        extension = str(path).split(".")[-1].lower()
         if extension in extset:
             return ResolutionResult(success=True, dformat=DataFormat(extension=extension))
         else:
