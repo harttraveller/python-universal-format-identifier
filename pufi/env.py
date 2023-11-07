@@ -29,7 +29,7 @@ if not CATEGORIES_LOCAL.exists():
     log.warning(f"Could not find {str(CATEGORIES_LOCAL)} file")
     try:
         download(CATEGORIES_URL, CATEGORIES_LOCAL)
-        log.info(f"Downloaded {str(CATEGORIES_LOCAL)} from {CATEGORIES_URL}")
+        log.info(f"Downloaded {CATEGORIES_URL} to {str(CATEGORIES_LOCAL)}")
     except:
         # todo: raise exception if no network connectivity
         pass
@@ -39,7 +39,7 @@ if not EXTENSIONS_LOCAL.exists():
     log.warning(f"Could not find {str(EXTENSIONS_LOCAL)} file")
     try:
         download(EXTENSIONS_URL, EXTENSIONS_LOCAL)
-        log.info(f"Downloaded {str(EXTENSIONS_LOCAL)} from {EXTENSIONS_URL}")
+        log.info(f"Downloaded {EXTENSIONS_URL} to {str(EXTENSIONS_LOCAL)}")
     except:
         # todo: raise exception if no network connectivity
         pass
