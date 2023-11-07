@@ -20,6 +20,10 @@ EXTENSIONS_URL = (
 CATEGORIES_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/categories.json"
 EXTENSIONS_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/extensions.json"
 
+
+# ! DYNAMIC
+
+
 # * ensure that cache dir exists and create if not
 if not PUFI_CACHE.exists():
     log.warning(f"A {str(PUFI_CACHE)} directory is needed to cache package data in")
