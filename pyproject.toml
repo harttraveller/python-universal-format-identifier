@@ -2,7 +2,7 @@
 name = "python-universal-format-identifier"
 packages = [{ include = "pufi" }]
 version = "0.1.0"
-description = "A universal format identifier for various file formats"
+description = "A universal format identifier for various file formats."
 readme = "README.md"
 repository = "https://github.com/harttraveller/pufi"
 documentation = "https://harttraveller.com/pufi"
