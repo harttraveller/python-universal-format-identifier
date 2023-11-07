@@ -1,5 +1,8 @@
 # python-universal-format-identifier
 
+## References
+
+- [dyne/file-extension-list](https://github.com/dyne/file-extension-list)
 
 ## Requirements
 
