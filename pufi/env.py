@@ -19,7 +19,6 @@ EXTENSIONS_URL = (
 )
 
 # ensure that package resource files are available
-# todo: add logging messages
 if not PUFI_CACHE.exists():
     log.warning(f"A {str(PUFI_CACHE)} directory is needed to cache package data in")
     PUFI_CACHE.mkdir()
@@ -32,7 +31,12 @@ if not CATEGORIES_LOCAL.exists():
     except:
         pass
 if not EXTENSIONS_LOCAL.exists():
-    download(EXTENSIONS_URL, EXTENSIONS_LOCAL)
+    log.warning(f"Could not find {str(EXTENSIONS_LOCAL)} file")
+    try:
+        download(EXTENSIONS_URL, EXTENSIONS_LOCAL)
+        log.info(f"Downloaded {str(EXTENSIONS_LOCAL)} from {EXTENSIONS_URL}")
+    except:
+        pass
 
 with open(CATEGORIES_LOCAL) as categories_file:
     CATEGORIES = cats = json.loads(categories_file.read())
