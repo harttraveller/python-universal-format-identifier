@@ -18,3 +18,5 @@
         - resolve text
     - else
         - filter for other formats
+            - * via unique checks is too slow
+            - ? use ML, or other approach
