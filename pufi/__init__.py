@@ -1,7 +1,13 @@
 from urllib.request import urlretrieve
-from pufi.env import CACHE, LOC_CAT, LOC_EXT, WEB_CAT, WEB_EXT
+from pufi.env import (
+    CACHE,
+    CATEGORIES_LOCAL,
+    EXTENSIONS_LOCAL,
+    CATEGORIES_URL,
+    EXTENSIONS_URL,
+)
 
 
 CACHE.mkdir(exist_ok=True)
-if not LOC_CAT.exists():
-    urlretrieve(WEB_CAT, LOC_CAT)
+if not CATEGORIES_LOCAL.exists():
+    urlretrieve(CATEGORIES_URL, CATEGORIES_LOCAL)
