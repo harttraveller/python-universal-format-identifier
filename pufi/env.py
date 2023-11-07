@@ -14,9 +14,11 @@ EXTENSIONS_LOCAL = PUFI_CACHE / "extensions.json"
 CATEGORIES_URL = (
     "https://github.com/dyne/file-extension-list/raw/master/pub/categories.json"
 )
+CATEGORIES_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/categories.json"
 EXTENSIONS_URL = (
     "https://github.com/dyne/file-extension-list/raw/master/pub/extensions.json"
 )
+EXTENSIONS_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/extensions.json"
 
 # * ensure that cache dir exists and create if not
 if not PUFI_CACHE.exists():
