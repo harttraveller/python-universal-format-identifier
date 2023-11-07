@@ -8,6 +8,7 @@ from pufi.variable import (
 )
 
 
+# ensure that package resource files are available
 if not CACHE.exists():
     CACHE.mkdir()
 if not CATEGORIES_LOCAL.exists():
