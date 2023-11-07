@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from loguru import logger as log
+from typing import Union
 from urllib.error import URLError
 from urllib import request
 from urllib.request import urlretrieve as download
@@ -23,7 +24,7 @@ CATEGORIES_URL_BACKUP = "https://github.com/harttraveller/python-universal-forma
 EXTENSIONS_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/extensions.json"
 
 
-# todo: move to micropkg
+# todo: move to sep micropkg
 class InternetUnavailableError(Exception):
     def __init__(self, reason: str) -> None:
         self.reason = reason
@@ -51,25 +52,30 @@ if not PUFI_CACHE.exists():
 if (not CATEGORIES_LOCAL.exists()) or (not EXTENSIONS_LOCAL.exists()):
     require_internet(reason="downloading package resource data")
 
+
+# todo: move to sep micropkg
+def cache_file(path: Union[str, Path], source: str, backup: str) -> None:
+    path = Path(path)
+    if not path.exists():
+        log.warning(f"Could not find {str(path)} file")
+        try:
+            download(source, path)
+            log.info(f"Downloaded {source} to {str(path)}")
+        except URLError:
+            log.error(f"Attempt to retrieve {source} failed, trying {backup}")
+            try:
+                download(backup, path)
+                log.info(f"Downloaded {backup} to {str(path)}")
+            except:
+                raise Exception("Could not download required package resource files.")
+
+
 # * ensure categories data cached and download if not
-if not CATEGORIES_LOCAL.exists():
-    log.warning(f"Could not find {str(CATEGORIES_LOCAL)} file")
-    try:
-        download(CATEGORIES_URL, CATEGORIES_LOCAL)
-        log.info(f"Downloaded {CATEGORIES_URL} to {str(CATEGORIES_LOCAL)}")
-    except Exception as exc:
-        # todo: raise exception if no network connectivity
-        raise exc
+cache_file(path=CATEGORIES_LOCAL, source=CATEGORIES_URL, backup=CATEGORIES_URL_BACKUP)
+
 
 # * ensure extensions data cached and download if not
-if not EXTENSIONS_LOCAL.exists():
-    log.warning(f"Could not find {str(EXTENSIONS_LOCAL)} file")
-    try:
-        download(EXTENSIONS_URL, EXTENSIONS_LOCAL)
-        log.info(f"Downloaded {EXTENSIONS_URL} to {str(EXTENSIONS_LOCAL)}")
-    except Exception as exc:
-        # todo: raise exception if no network connectivity
-        raise exc
+cache_file(path=EXTENSIONS_LOCAL, source=EXTENSIONS_URL, backup=EXTENSIONS_URL_BACKUP)
 
 # * load categories data
 with open(CATEGORIES_LOCAL) as categories_file:
