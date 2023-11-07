@@ -18,6 +18,7 @@ EXTENSIONS_URL = (
 # ensure that package resource files are available
 # todo: add logging messages
 if not PUFI_CACHE.exists():
+    log.info("Create '~/.pufi' directory to cache package files in.")
     PUFI_CACHE.mkdir()
 if not CATEGORIES_LOCAL.exists():
     download(CATEGORIES_URL, CATEGORIES_LOCAL)
