@@ -24,9 +24,9 @@ if not EXTENSIONS_LOCAL.exists():
     urlretrieve(EXTENSIONS_URL, EXTENSIONS_LOCAL)
 
 with open(CATEGORIES_LOCAL) as categories_file:
-    CATEGORIES = json.loads(categories_file.read())
+    CATEGORIES = cats = json.loads(categories_file.read())
 categories_file.close()
 
 with open(EXTENSIONS_LOCAL) as extensions_file:
-    EXTENSIONS = json.loads(extensions_file.read())
+    EXTENSIONS = exts = json.loads(extensions_file.read())
 extensions_file.close()
