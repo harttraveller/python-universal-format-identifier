@@ -7,8 +7,8 @@ from pufi.env import (
     EXTENSIONS_URL,
 )
 
-
-CACHE.mkdir(exist_ok=True)
+if not CACHE.exists():
+    CACHE.mkdir()
 if not CATEGORIES_LOCAL.exists():
     urlretrieve(CATEGORIES_URL, CATEGORIES_LOCAL)
 if not EXTENSIONS_LOCAL.exists():
