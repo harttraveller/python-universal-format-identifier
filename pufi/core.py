@@ -7,11 +7,12 @@ from pufi.vars import cats, exts, extset
 class DataFormat(BaseModel):
     extension: str
 
-    @field_validator("extension")
-    def __validate_name(cls, extension: str) -> str:
-        if extension not in extset:
-            raise ValueError("unknown file format")
-        return extension
+    # @field_validator("extension")
+    # def __validate_name(cls, extension: str) -> str:
+    #     if (extension not in extset) or (extension != "unknown"):
+    #         # ? redundant
+    #         raise ValueError("unknown file format")
+    #     return extension
 
     def __str__(self) -> str:
         return self.extension
@@ -34,9 +35,9 @@ def resolve_via_path(path: Union[str, Path], val: bool) -> ResolutionResult:
     if "." in path:
         extension = path.split(".")[-1].lower()
         if extension in extset:
-            return ResolutionResult(success=True, dformat=DataFormat(name=extension))
+            return ResolutionResult(success=True, dformat=DataFormat(extension=extension))
         else:
-            return ResolutionResult(success=False, dformat="unknown")
+            return ResolutionResult(success=False, dformat=DataFormat(extension=))
     else:
         raise NotImplementedError(
             "Could not resolve from file extension, would need to read in file "
