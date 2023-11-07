@@ -13,3 +13,8 @@
         - resolve bin
 - if raw (text)
 - if bin
+    - try decode text
+    - if works
+        - resolve text
+    - else
+        - filter for other formats
