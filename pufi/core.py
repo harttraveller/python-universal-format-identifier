@@ -37,7 +37,9 @@ def resolve_via_path(path: Union[str, Path], val: bool) -> ResolutionResult:
         if extension in extset:
             return ResolutionResult(success=True, dformat=DataFormat(extension=extension))
         else:
-            return ResolutionResult(success=False, dformat=DataFormat(extension=))
+            return ResolutionResult(
+                success=False, dformat=DataFormat(extension="unknown")
+            )
     else:
         raise NotImplementedError(
             "Could not resolve from file extension, would need to read in file "
