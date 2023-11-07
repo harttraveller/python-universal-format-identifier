@@ -30,9 +30,9 @@ class Resolver:
         pass
 
 
-def resolve_via_loc(loc: Union[str, Path], val: bool) -> ResolutionResult:
-    if "." in loc:
-        extension = loc.split(".")[-1].lower()
+def resolve_via_path(path: Union[str, Path], val: bool) -> ResolutionResult:
+    if "." in path:
+        extension = path.split(".")[-1].lower()
         if extension in extset:
             return ResolutionResult(success=True, dformat=DataFormat(name=extension))
         else:
@@ -49,7 +49,7 @@ def resolve_via_uri(uri: str) -> ResolutionResult:
     pass
 
 
-def resolve_via_raw(raw: str) -> ResolutionResult:
+def resolve_via_text(text: str) -> ResolutionResult:
     pass
 
 
@@ -75,7 +75,7 @@ def resolve(
     # assess if the path or uri
     # todo: if val, run all, compare results
     if path is not None:
-        loc_resolution_attempt = resolve_via_loc(loc=path, val=check)
+        loc_resolution_attempt = resolve_via_path(path=path, val=check)
         if loc_resolution_attempt.success:
             # todo: if val, doublecheck by reading in
             return loc_resolution_attempt.dformat
@@ -85,7 +85,7 @@ def resolve(
             # todo: if val, doublecheck by retrieving from web
             return uri_resolution_attempt.dformat
     if text is not None:
-        raw_resolution_attempt = resolve_via_raw(raw=text)
+        raw_resolution_attempt = resolve_via_text(text=text)
         if raw_resolution_attempt.success:
             return raw_resolution_attempt.dformat
     if bin is not None:
