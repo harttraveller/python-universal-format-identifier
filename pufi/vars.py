@@ -30,7 +30,7 @@ class InternetUnavailableError(Exception):
         self.reason = reason
 
     def __str__(self) -> str:
-        return f"Internet connection required for: {self.reason}"
+        return f"Internet connection required for {self.reason}"
 
 
 def require_internet(reason: str, check: str = "https://www.google.com"):
@@ -48,16 +48,13 @@ if not PUFI_CACHE.exists():
     PUFI_CACHE.mkdir()
     log.info(f"Created {str(PUFI_CACHE)} cache directory")
 
-# * check network access
-if (not CATEGORIES_LOCAL.exists()) or (not EXTENSIONS_LOCAL.exists()):
-    require_internet(reason="downloading package resource data")
-
 
 # todo: move to sep micropkg
 def cache_file(path: Union[str, Path], source: str, backup: str) -> None:
     path = Path(path)
     if not path.exists():
         log.warning(f"Could not find {str(path)} file")
+        require_internet(reason=f"downloading {source}")
         try:
             download(source, path)
             log.info(f"Downloaded {source} to {str(path)}")
