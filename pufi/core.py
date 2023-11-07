@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional, Union
 from pydantic import BaseModel, field_validator
-from pufi.env import cats, exts
+from pufi.vars import cats, exts
 
 
 class DataFormat(BaseModel):
