@@ -59,8 +59,6 @@ def resolve(
     # check if appropriate params have been passed in
     if all([raw is None, loc is None]):
         raise ValueError("You must pass an argument to at least one of the parameters.")
-    # assess if the path or uri
-    # todo: if val, run all, compare results
     if loc is not None:
         loc_resolution_attempt = resolve_loc(loc=loc)
         if loc_resolution_attempt.success:
