@@ -10,18 +10,9 @@ from urllib.request import urlretrieve as download
 PUFI_CACHE = Path.home() / ".pufi"
 
 # * local cached category/extension data
-CATEGORIES_LOCAL = PUFI_CACHE / "categories.json"
-EXTENSIONS_LOCAL = PUFI_CACHE / "extensions.json"
+EXTENSIONS_LOCAL = PUFI_CACHE / "extensions.txt"
 
-# * category/extension data source
-CATEGORIES_URL = (
-    "https://github.com/dyne/file-extension-list/raw/master/pub/categories.json"
-)
-EXTENSIONS_URL = (
-    "https://github.com/dyne/file-extension-list/raw/master/pub/extensions.json"
-)
-CATEGORIES_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/categories.json"
-EXTENSIONS_URL_BACKUP = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/extensions.json"
+EXTENSIONS_URL = "https://github.com/harttraveller/python-universal-format-identifier/raw/main/file/extensions.txt"
 
 
 # todo: move to sep micropkg
@@ -50,43 +41,24 @@ if not PUFI_CACHE.exists():
 
 
 # todo: move to sep micropkg
-def cache_file(path: Union[str, Path], source: str, backup: str) -> None:
+def cache_file(path: Union[str, Path], url: str) -> None:
     path = Path(path)
     if not path.exists():
         log.warning(f"Could not find {str(path)} file")
-        require_internet(reason=f"downloading {source}")
+        require_internet(reason=f"downloading {url}")
         try:
-            download(source, path)
-            log.info(f"Downloaded {source} to {str(path)}")
+            download(url, path)
+            log.info(f"Downloaded {url} to {str(path)}")
         except URLError:
-            log.error(f"Attempt to retrieve {source} failed, trying {backup}")
-            try:
-                download(backup, path)
-                log.info(f"Downloaded {backup} to {str(path)}")
-            except:
-                raise Exception("Could not download required package resource files.")
-
-
-# * ensure categories data cached and download if not
-cache_file(path=CATEGORIES_LOCAL, source=CATEGORIES_URL, backup=CATEGORIES_URL_BACKUP)
+            raise Exception("Could not download required package resource files.")
 
 
 # * ensure extensions data cached and download if not
-cache_file(path=EXTENSIONS_LOCAL, source=EXTENSIONS_URL, backup=EXTENSIONS_URL_BACKUP)
-
-# * load categories data
-with open(CATEGORIES_LOCAL) as categories_file:
-    CATEGORIES = cats = json.loads(categories_file.read())
-categories_file.close()
+cache_file(path=EXTENSIONS_LOCAL, url=EXTENSIONS_URL)
 
 # * load extensions data
 with open(EXTENSIONS_LOCAL) as extensions_file:
-    EXTENSIONS = exts = json.loads(extensions_file.read())
+    EXTENSIONS = exts = set(
+        [i.strip() for i in extensions_file.read().split("\n") if i.strip() != ""]
+    )
 extensions_file.close()
-# for ext in EXTENSIONS.keys():
-#     if "." in ext:
-#         del EXTENSIONS[ext]
-# exts = EXTENSIONS
-
-# * get extensions set
-EXTENSIONS_SET = extset = set(exts.keys())
