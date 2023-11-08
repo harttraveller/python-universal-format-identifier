@@ -1,0 +1,17 @@
+json
+html
+csv
+mp3
+mp4
+html
+zsh
+sh
+gif
+jpg
+jpeg
+yaml
+tomlcss
+py
+js
+md
+txt
